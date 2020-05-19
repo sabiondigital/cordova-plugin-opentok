@@ -246,8 +246,14 @@ public class OpenTokAndroidPlugin extends CordovaPlugin
         }
 
         public void stopPublishing() {
-            ViewGroup parent = (ViewGroup) webView.getView().getParent();
-            parent.removeView(this.mView);
+            RunnablePublisher self = this;
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ViewGroup parent = (ViewGroup) webView.getView().getParent();
+                    parent.removeView(self.mView);
+                }
+            });
             if(this.mPublisher != null){
                 try {
                     mSession.unpublish(this.mPublisher);
@@ -258,8 +264,14 @@ public class OpenTokAndroidPlugin extends CordovaPlugin
         }
 
         public void destroyPublisher() {
-            ViewGroup parent = (ViewGroup) webView.getView().getParent();
-            parent.removeView(this.mView);
+            RunnablePublisher self = this;
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ViewGroup parent = (ViewGroup) webView.getView().getParent();
+                    parent.removeView(self.mView);
+                }
+            });
             if (this.mPublisher != null) {
                 this.mPublisher.destroy();
                 this.mPublisher = null;
@@ -371,8 +383,14 @@ public class OpenTokAndroidPlugin extends CordovaPlugin
         }
 
         public void removeStreamView() {
-            ViewGroup parent = (ViewGroup) webView.getView().getParent();
-            parent.removeView(this.mView);
+            RunnableSubscriber self = this;
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ViewGroup parent = (ViewGroup) webView.getView().getParent();
+                    parent.removeView(self.mView);
+                }
+            });
             if(mSubscriber != null) {
                 try {
                     mSession.unsubscribe(mSubscriber);
